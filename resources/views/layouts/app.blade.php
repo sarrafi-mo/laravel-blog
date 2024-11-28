@@ -14,8 +14,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light-subtle">
         <div class="container">
-            <a class="navbar-brand" href="#">My Blog</a>
-            <div class="">
+            <a class="navbar-brand" href="{{ route('posts.index') }}">My Blog</a>
+            <div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,11 +35,20 @@
                 </ul>
                 <hr>
                 <div>
-                    <a href="#" class="btn btn-success btn-sm text-light"> Create Post </a>
-                    <a href="#" class="btn btn-dark btn-sm text-light"> Categories </a>
-                    <form action="#" class="d-inline">
-                        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                    </form>
+                    @auth
+                        @can('admin')
+                            <a href="{{ route('posts.create') }}" class="btn btn-success btn-sm text-light"> Create Post </a>
+                            <a href="{{ route('post.categories') }}" class="btn btn-dark btn-sm text-light"> Categories </a>
+                        @endcan
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                        </form>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btn-success btn-sm text-light"> Login </a>
+                        <a href="{{ route('register') }}" class="btn btn-dark btn-sm text-light"> Register </a>
+                    @endguest
                 </div>
             </div>
         </div>

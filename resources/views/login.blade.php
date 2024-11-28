@@ -8,9 +8,15 @@
                     <div class="card-header text-center">
                         <h4>Login</h4>
                     </div>
+
                     <div class="card-body">
-                        <!-- Login Form -->
-                        <form action="#">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            @if ($errors->has('login'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('login') }}</strong>
+                                </span>
+                            @endif
                             <div class="mb-3 d-none">
                                 <label for="username" class="form-label">Username</label>
                                 <input id="username" type="text" class="form-control" name="username">
@@ -41,7 +47,7 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <p>Don't have an account? <a href="#">Register Here</a></p>
+                        <p>Don't have an account? <a href="{{ route('register') }}">Register Here</a></p>
                     </div>
                 </div>
             </div>
