@@ -95,7 +95,7 @@ class PostController extends Controller
 
         $post->update($validated);
 
-        return redirect()->route('posts.edit', $post)->with('success', "post updated successfully");
+        return redirect()->route('posts.edit', $post->slug)->with('success', "post updated successfully");
     }
 
     /**

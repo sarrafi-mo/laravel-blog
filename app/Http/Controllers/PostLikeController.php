@@ -12,7 +12,7 @@ class PostLikeController extends Controller
 
         $liker->likes()->attach($post);
 
-        return redirect()->route('posts.show', $post->id . '#post-content')->with('success', "Liked successfully!");
+        return redirect()->route('posts.show', $post->slug . '#post-content')->with('success', "Liked successfully!");
     }
 
     public function unlike(Post $post)
@@ -21,6 +21,6 @@ class PostLikeController extends Controller
 
         $liker->likes()->detach($post);
 
-        return redirect()->route('posts.show', $post->id . '#post-content')->with('success', "Unliked successfully!");
+        return redirect()->route('posts.show', $post->slug . '#post-content')->with('success', "Unliked successfully!");
     }
 }

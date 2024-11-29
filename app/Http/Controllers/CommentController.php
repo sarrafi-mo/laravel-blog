@@ -22,7 +22,7 @@ class CommentController extends Controller
 
         Comment::create($validated);
 
-        return redirect()->route('posts.show', $post->id . '#post-content')->with('success', "Your comment saved successfuly.");
+        return redirect()->route('posts.show', $post->slug . '#post-content')->with('success', "Your comment saved successfuly.");
     }
 
     public function destroy(Post $post , Comment $comment)
@@ -30,6 +30,6 @@ class CommentController extends Controller
         $this->authorize('comment.delete', $comment);
 
         $comment->delete();
-        return redirect()->route('posts.show', $post->id . '#post-content')->with('success', "comment deleted successfuly.");
+        return redirect()->route('posts.show', $post->slug . '#post-content')->with('success', "comment deleted successfuly.");
     }
 }

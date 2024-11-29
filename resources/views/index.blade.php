@@ -18,12 +18,12 @@
                         <div class="card-body">
                             <h5 class="card-title"> {{ $post->title }} </h5>
                             <p class="card-text"> {{ Str::limit($post->content, 35) }} </p>
-                            <a href="{{ route('posts.show', $post) }}" class="btn btn-primary">Read More</a>
+                            <a href="{{ route('posts.show', $post->slug) }}" class="btn btn-primary">Read More</a>
 
                             @auth
                                 @can('admin')
                                     <!-- Delete form -->
-                                    <form action="{{ route('posts.destroy', $post) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('posts.destroy', $post->slug) }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-sm text-danger float-end p-0" type="submit">
@@ -32,7 +32,7 @@
                                     </form>
 
                                     <!-- Edit page link -->
-                                    <a href="{{ route('posts.edit', $post) }}" class="text-dark float-end me-2">
+                                    <a href="{{ route('posts.edit', $post->slug) }}" class="text-dark float-end me-2">
                                         <i class="bi bi-pencil-square" style="font-size: 1.5rem"></i>
                                     </a>
                                 @endcan
