@@ -38,7 +38,7 @@
         <div id="likes-div" class="my-3">
             @auth
                 @if (Auth::user()->likesPost($post))
-                    <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
+                    <form action="{{ route('posts.unlike', $post->slug) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-sm text-danger me-3">
                             <i class="bi bi-heart-fill" style="font-size: 1.5rem;"></i>
@@ -46,7 +46,7 @@
                         </button>
                     </form>
                 @else
-                    <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                    <form action="{{ route('posts.like', $post->slug) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-sm text-danger me-3">
                             <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
@@ -81,7 +81,7 @@
                     <h5>{{ $comment->user->name }}</h5>
                     @auth
                         @can('comment.delete', $comment)
-                            <form action="{{ route('posts.comments.destroy', ['post' => $post->id, 'comment' => $comment->id]) }}"
+                            <form action="{{ route('posts.comments.destroy', ['post' => $post->slug, 'comment' => $comment->id]) }}"
                                 method="POST">
                                 @method('delete')
                                 @csrf
@@ -107,7 +107,7 @@
             <!-- Comment Form -->
             <div class="comment-form my-5">
                 <h3>Leave a Comment</h3>
-                <form action="{{ route('posts.comments.store', $post->id) }}" method="POST">
+                <form action="{{ route('posts.comments.store', $post->slug) }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="comment" class="form-label">Your Comment</label>
