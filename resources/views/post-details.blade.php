@@ -3,7 +3,7 @@
 @section('content')
     <div class="container my-5">
         <!-- Post Title -->
-        <h1 class="display-4">Post Title</h1>
+        <h1 class="display-4">{{ $post->title }}</h1>
 
         <!-- Author and Date -->
         <p class="text-muted">
