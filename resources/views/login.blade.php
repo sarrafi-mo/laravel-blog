@@ -37,6 +37,16 @@
                                 </label>
                             </div>
 
+                            @livewire('captcha')
+                            <input class="form-control mt-1" type="text" name="captcha" id="captcha"
+                            required placeholder="Solve the question to proceed." >
+
+                            @if ($errors->has('captcha'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('captcha') }}</strong>
+                                </span>
+                            @endif
+
                             <div class="d-grid mt-3">
                                 <button type="submit" class="btn btn-success">Login</button>
                             </div>

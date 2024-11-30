@@ -14,13 +14,13 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($archive = null)
     {
-        $posts = Post::orderBy('id', 'DESC');
-
-        return view('index' , [
-            'posts' => $posts->paginate(6)
-        ]);
+        if ($archive != null) {
+            return view('index' , compact('archive'));
+        } else {
+            return view('index');
+        }
     }
 
     /**
