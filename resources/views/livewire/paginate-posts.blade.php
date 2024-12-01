@@ -8,7 +8,7 @@
                 </h5>
             </div>
         @else
-            @foreach ($posts as $post)
+            @forelse ($posts as $post)
                 <!-- Example of a single blog post card -->
                 <div class="col-md-4 mb-4">
                     <div class="card">
@@ -39,7 +39,11 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+            <div class="text-center">
+                <p>No Results Found.</p>
+            </div>
+            @endforelse
         @endif
     </div>
 
