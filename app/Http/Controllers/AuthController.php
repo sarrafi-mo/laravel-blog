@@ -16,7 +16,7 @@ class AuthController extends Controller
         if (auth()->check()) {
             return redirect()->intended('posts');
         }
-        return view('login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -49,7 +49,7 @@ class AuthController extends Controller
         if (auth()->check()) {
             return redirect()->intended('posts');
         }
-        return view('register');
+        return view('auth.register');
     }
 
     public function store(StoreUserRequest $request)

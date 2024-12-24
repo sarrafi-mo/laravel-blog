@@ -1,8 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-5">
-        <h1 class="mb-4">Edit Post</h1>
+    <div class="container my-3">
+
+        <h1 class="display-6 my-3">Edit Post</h1>
+
+        <div>
+            <span class="h5"><a href="{{ url()->previous() }}"><u>Posts</u></a></span>
+            <span class="bi bi-arrow-right"></span>
+            <span class="h5"> Edit Post </span>
+        </div>
 
         @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -11,7 +18,11 @@
             </div>
         @endif
 
-        <form action="{{ route('posts.update', $post->slug) }}" method="POST">
+        <div class="mb-3 mt-3">
+            <label for="postTitle" class="form-label">Current Title</label>
+            <input type="text" class="form-control" disabled id="postTitle" value="{{ $post->title }}">
+        </div>
+        <form action="{{ route('admin.posts.update', $post->slug) }}" method="POST">
             @method('put')
             @csrf
 

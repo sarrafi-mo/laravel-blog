@@ -22,7 +22,7 @@
                             @auth
                                 @can('admin')
                                     <!-- Delete form -->
-                                    <form action="{{ route('posts.destroy', $post->slug) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-sm text-danger float-end p-0" type="submit">
@@ -31,7 +31,7 @@
                                     </form>
 
                                     <!-- Edit page link -->
-                                    <a href="{{ route('posts.edit', $post->slug) }}" class="text-dark float-end me-2">
+                                    <a href="{{ route('admin.posts.edit', $post->slug) }}" class="text-dark float-end me-2">
                                         <i class="bi bi-pencil-square" style="font-size: 1.5rem"></i>
                                     </a>
                                 @endcan

@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('admin.shared.top-menu')
+
     <div class="container my-5">
         <h1 class="mb-4">Categories</h1>
-        <div class="container mt-3">
+        <div class="mt-3">
             @if (session()->has('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -37,25 +39,22 @@
                 </tbody>
             </table>
         </div>
+        <h2 class="mt-5">Create New Category</h2>
+        <form action="{{ route('post.categories.store') }}" method="POST">
+            @csrf
+            <!-- Category -->
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input name="category" type="text" class="form-control" id="category" placeholder="Enter category"
+                    required>
+            </div>
 
-        <div class="container">
-            <h2 class="mt-5">Create New Category</h2>
-            <form action="{{ route('post.categories.store') }}" method="POST">
-                @csrf
-                <!-- Category -->
-                <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <input name="category" type="text" class="form-control" id="category" placeholder="Enter category"
-                        required>
-                </div>
+            <!-- Submit Button -->
+            <button class="btn btn-success" type="submit">Create</button>
 
-                <!-- Submit Button -->
-                <button class="btn btn-success" type="submit">Create</button>
-
-                @error('category')
-                    <span class="text-danger"> {{ $message }} </span>
-                @enderror
-            </form>
-        </div>
+            @error('category')
+                <span class="text-danger"> {{ $message }} </span>
+            @enderror
+        </form>
     </div>
 @endsection

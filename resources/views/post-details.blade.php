@@ -1,9 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-5">
+    <div class="container my-3">
+
         <!-- Post Title -->
-        <h1 class="display-4">{{ $post->title }}</h1>
+        <h1 class="display-6 my-3">{{ $post->title }}</h1>
+        <div class="mb-3">
+            <span class="h5"><a href="{{ url()->previous() === url()->current() ?  route('posts.index') : url()->previous() }}"><u>Posts</u></a></span>
+            <span class="bi bi-arrow-right"></span>
+            <span class="h5"> Post Detail </span>
+        </div>
 
         <!-- Author and Date -->
         <p class="text-muted">
@@ -14,7 +20,7 @@
         </p>
 
         <!-- Post Image -->
-        <div class="my-4">
+        <div class="mb-4">
             <img src="{{ asset('images/blog/orginal/' . $post->image) }}" class="img-fluid rounded" style="width: 800px"
                 alt="Post Image">
         </div>
@@ -81,7 +87,8 @@
                     <h5>{{ $comment->user->name }}</h5>
                     @auth
                         @can('comment.delete', $comment)
-                            <form action="{{ route('posts.comments.destroy', ['post' => $post->slug, 'comment' => $comment->id]) }}"
+                            <form
+                                action="{{ route('posts.comments.destroy', ['post' => $post->slug, 'comment' => $comment->id]) }}"
                                 method="POST">
                                 @method('delete')
                                 @csrf
