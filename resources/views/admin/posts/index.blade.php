@@ -4,10 +4,16 @@
     @include('admin.shared.top-menu')
 
     <div class="container my-5">
-        <div>
-            <h2 class="mb-4 d-inline">All Posts</h2>
+        <div class="mb-4">
+            <h2 class="d-inline">All Posts</h2>
             <a class="btn btn-success btn-sm float-end" href="{{ route('admin.posts.create') }}">Create +</a>
         </div>
+
+        @include('admin.shared.searchbar', [
+            'route' => 'admin.posts.index',
+            'placeholder' => 'Search in Titles ...',
+        ])
+
         <div class="mt-3">
             <table class="table table-bordered">
                 <thead>
@@ -27,17 +33,20 @@
                     @forelse ($posts as $post)
                         <tr>
                             <td>{{ $post->id }}</td>
-                            <td><a class="text-dark" href="{{ route('posts.show', $post->slug) }}"><u>{{ Str::limit($post->title, 20) }}</u></a></td>
+                            <td><a class="text-dark"
+                                    href="{{ route('posts.show', $post->slug) }}"><u>{{ Str::limit($post->title, 20) }}</u></a>
+                            </td>
                             <td>{{ Str::limit($post->content, 30) }}</td>
                             <td>{{ $post->category }}</td>
-                            <td><img src="{{ asset('images/blog/thumbnail/' . $post->image) }}"
-                                    class="card-img-top" style="width: 75px;" alt="#"></td>
+                            <td><img src="{{ asset('images/blog/thumbnail/' . $post->image) }}" class="card-img-top"
+                                    style="width: 75px;" alt="#"></td>
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->comments->count() }}</td>
                             <td>{{ $post->likes->count() }}</td>
                             <td>
                                 <!-- Delete form -->
-                                <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST"
+                                    class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button class="btn btn-sm text-danger float-end p-0" type="submit">

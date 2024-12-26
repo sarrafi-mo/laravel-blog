@@ -37,7 +37,7 @@
                 <div>
                     @auth
                         @can('admin')
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm text-light"> Dashboard </a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-sm text-light"> Dashboard </a>
                         @endcan
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf

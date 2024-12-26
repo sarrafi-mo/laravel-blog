@@ -17,6 +17,10 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('id', 'DESC');
 
+        if (request()->has('search')) {
+            $posts = $posts->where('title', 'like', '%' . request()->get('search', '') . '%');
+        }
+
         return view('admin.posts.index', [
             'posts' => $posts->paginate(8)
         ]);

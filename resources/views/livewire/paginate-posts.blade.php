@@ -1,4 +1,5 @@
 <div>
+    <input wire:model.live.debounce.300ms='search' type="text" placeholder="Search . . ." class="form-control mb-3">
     <!-- Blog Posts -->
     <div class="row">
         @if ($posts->currentPage() > 5 && !isset($archive))
@@ -22,7 +23,8 @@
                             @auth
                                 @can('admin')
                                     <!-- Delete form -->
-                                    <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('admin.posts.destroy', $post->slug) }}" method="POST"
+                                        class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-sm text-danger float-end p-0" type="submit">
@@ -40,9 +42,9 @@
                     </div>
                 </div>
             @empty
-            <div class="text-center">
-                <p>No Results Found.</p>
-            </div>
+                <div class="text-center">
+                    <p>No Results Found.</p>
+                </div>
             @endforelse
         @endif
     </div>
