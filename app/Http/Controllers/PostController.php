@@ -17,6 +17,9 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+
+        $post->loadCount('likes');
+
         $comments = $post->comments()->orderBy('created_at', 'desc')->paginate(5);
         
         $suggestedPosts = Post::where('category', $post->category)

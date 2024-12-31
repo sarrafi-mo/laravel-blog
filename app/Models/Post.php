@@ -9,8 +9,6 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $withCount = ['likes'];
-
     protected $fillable = [
         'title',
         'slug',
