@@ -28,17 +28,23 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-            'captcha' => 'required|captcha',
         ]);
 
+        $validator->sometimes('captcha', 'required|captcha', function ($input) {
+            return session('login_attempts', 0) >= 2;
+        });
+
         if ($validator->fails()) {
+            $this->check_login_session();
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+            session()->forget('login_attempts');
             return redirect()->intended('posts');
         }
 
+        $this->check_login_session();
         return redirect()->back()->withErrors([
             'login' => 'The provided credentials are incorrect.',
         ])->withInput();
@@ -57,7 +63,7 @@ class AuthController extends Controller
         if ($request->filled('username')) {
             abort(403);
         }
-        
+
         $validated = $request->validated();
 
         if (!$validated) {
@@ -83,5 +89,14 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
 
         return redirect()->route('login');
+    }
+
+    private function check_login_session()
+    {
+        if (session()->has('login_attempts')) {
+            session()->increment('login_attempts');
+        } else {
+            session(['login_attempts' => 1]);
+        }
     }
 }

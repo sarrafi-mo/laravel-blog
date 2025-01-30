@@ -37,9 +37,11 @@
                                 </label>
                             </div>
 
-                            @livewire('captcha')
-                            <input class="form-control mt-1" type="text" name="captcha" id="captcha"
-                            required placeholder="Solve the question to proceed." >
+                            @if (session('login_attempts', 0) >= 2)
+                                @livewire('captcha')
+                                <input class="form-control mt-1" type="text" name="captcha" id="captcha" required
+                                    placeholder="Solve the question to proceed.">
+                            @endif
 
                             @if ($errors->has('captcha'))
                                 <span class="text-danger">
