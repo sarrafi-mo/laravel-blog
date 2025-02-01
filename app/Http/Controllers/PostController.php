@@ -8,11 +8,15 @@ class PostController extends Controller
 {
     public function index($archive = null)
     {
-        if ($archive != null) {
+        if ($archive === 'archive') {
             return view('index', compact('archive'));
-        } else {
-            return view('index');
         }
+        
+        if ($archive !== null) {
+            abort(404);
+        }
+        
+        return view('index');
     }
 
     public function show(Post $post)
