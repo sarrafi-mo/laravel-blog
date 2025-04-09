@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use App\Mail\VerificationCodeEmail;
+use App\Mail\Services\EmailVerificationService;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -132,20 +129,14 @@ class AuthController extends Controller
         ]);
 
         // Send verification email
-        try {
-            Mail::to($request->email)->send(new VerificationCodeEmail($verificationCode));
-            return redirect()->route('email.verify');
+        $service = new EmailVerificationService();
+        $result = $service->send($request->email, $verificationCode);
 
-        } catch (Exception $e) {
-
-            // Log email sending errors
-            Log::error('verification email ERROR : ' . $e->getMessage());
-
-            return redirect()->back()->withErrors([
-                'register' => 'We encountered an issue sending the verification email.
-                Please check your email address and try again. If the problem persists, contact support.',
-            ])->withInput();
+        if (!$result['success']) {
+            return back()->withErrors(['register' => $result['message']]);
         }
+
+        return redirect()->route('email.verify');
     }
 
     /* 
